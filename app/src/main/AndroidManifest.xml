@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.assistant.fronted">
 
+<!--使用网络权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +17,7 @@
         android:theme="@style/Theme.Fronted"
         tools:targetApi="31">
         <activity
-            android:name=".MainviewActivity"
+            android:name=".UI.Login.MainviewActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

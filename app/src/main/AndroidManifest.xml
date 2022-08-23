@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.assistant.fronted">
-
-<!--使用网络权限-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 使用网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,17 +16,27 @@
         android:theme="@style/Theme.Fronted"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Login.MainviewActivity"
+            android:name=".FacultySettingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".FacultyAffairActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FacultyNitificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.Login.MainviewActivity"
+            android:exported="true"
+            android:label="UJS个人助手">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

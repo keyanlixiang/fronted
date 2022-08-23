@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/layout/activity_faculty_affair.xml" value="0.3374094202898551" />
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/layout/activity_faculty_nitification.xml" value="0.3374094202898551" />
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/layout/activity_faculty_setting.xml" value="0.3374094202898551" />
         <entry key="..\:/GitHubRepository/fronted/app/src/main/res/layout/activity_main.xml" value="0.3374094202898551" />
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/layout/activity_mainview.xml" value="0.3374094202898551" />
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/menu/bottom.xml" value="0.3651041666666667" />
+        <entry key="..\:/GitHubRepository/fronted/app/src/main/res/menu/facutybottom.xml" value="0.36614583333333334" />
         <entry key="..\:/JetBrains/科研立项-学生助手app前端/app/src/main/res/layout/activity_mainview.xml" value="0.25364583333333335" />
       </map>
     </option>

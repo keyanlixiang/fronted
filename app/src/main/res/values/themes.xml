@@ -13,4 +13,19 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NoActionbarMyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--背景颜色-->
+        <item name="android:windowBackground">#DFE8F1</item>
+        <!--主要颜色-->
+        <item name="colorPrimaryVariant">#1C4332</item>
+        <item name="colorPrimary">#348E67</item>
+        <!--主要颜色对比色-->
+        <item name="colorOnPrimary">@color/white</item>
+        <!--次要颜色-->
+        <item name="colorSecondary">#F5FAF6</item>
+        <item name="colorSecondaryVariant">#236146</item>
+        <!--次要颜色对比色-->
+        <item name="colorOnSecondary">#348E67</item>
+    </style>
 </resources>

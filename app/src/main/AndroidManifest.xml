@@ -13,16 +13,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Fronted"
+        android:theme="@style/NoActionbarMyTheme"
         tools:targetApi="31">
         <activity
-            android:name=".FacultySettingActivity"
+            android:name=".UI.Faculty.FacultySettingActivity"
             android:exported="false" />
         <activity
-            android:name=".FacultyAffairActivity"
+            android:name=".UI.Faculty.FacultyAffairActivity"
             android:exported="false" />
         <activity
-            android:name=".FacultyNitificationActivity"
+            android:name=".UI.Faculty.FacultyNotificationActivity"
             android:exported="false" />
         <activity
             android:name=".UI.Login.MainviewActivity"

@@ -27,5 +27,7 @@
         <item name="colorSecondaryVariant">#236146</item>
         <!--次要颜色对比色-->
         <item name="colorOnSecondary">#348E67</item>
+
+        <item name="colorSurface">#BCF3DA</item>
     </style>
 </resources>

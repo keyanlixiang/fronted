@@ -19,6 +19,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ujsnobacked" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="21dp"
+        app:tabMode="fixed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学生登录" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="职工登陆" />
+    </com.google.android.material.tabs.TabLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -27,7 +48,7 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="56dp"
-        android:hint="工号"
+        android:hint="学号"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +56,7 @@
         app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/facultyTno"
+            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,14 +70,15 @@
         android:layout_marginTop="19dp"
         android:layout_marginEnd="56dp"
         android:hint="密码"
-        app:endIconMode="clear_text"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
         app:startIconDrawable="@drawable/ic_baseline_blur_on_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/facultyPassword"
+            android:id="@+id/password"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <CheckBox
-        android:id="@+id/facultyRemember"
+        android:id="@+id/remember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"

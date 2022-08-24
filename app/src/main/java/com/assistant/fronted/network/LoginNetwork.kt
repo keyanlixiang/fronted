@@ -17,16 +17,15 @@ object LoginNetwork {
     private val loginService =ServiceCreator.create<LoginService>()
 
 //    数据的接收
-    suspend fun studentLogin(sno:Long,spassword:String)= parseResult(loginService.studentLogin(sno,spassword).await())
+    suspend fun studentLogin(sno:Long,spassword:String)= loginService.studentLogin(sno,spassword).await()
 
-    suspend fun facultyLogin(tno:Long,tpassword: String)= parseResult(loginService.facultyLogin(tno,tpassword).await())
+    suspend fun facultyLogin(tno:Long,tpassword: String)=loginService.facultyLogin(tno,tpassword).await()
 
-//    转换为Result,注意Result的包，是自己建的Result
-    private fun parseResult(jsonData: ResponseBody): Result<*>? {
-        val gson = Gson()
-        val result = gson.fromJson(jsonData.string(),com.assistant.fronted.model.Result::class.java)
-        return result
-    }
+    suspend fun studentUpdatePassword(sno: Long,oldPassword:String,newPassword:String)= loginService.studentUpdatePassword(sno, oldPassword, newPassword).await()
+
+    suspend fun facultyUpdatePassword(tno: Long,oldPassword:String,newPassword:String)= loginService.facultyUpdatePassword(tno, oldPassword, newPassword).await()
+
+
 
 
 //     数据接收处理

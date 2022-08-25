@@ -1,11 +1,15 @@
 package com.assistant.fronted.UI.Login
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.assistant.fronted.R
+import com.assistant.fronted.UI.Faculty.FacultyNotificationActivity
+import com.assistant.fronted.UI.Faculty.User
 import com.assistant.fronted.databinding.ActivityMainviewBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -92,8 +96,41 @@ class MainviewActivity : AppCompatActivity() {
          * 登陆按钮
          */
         binding.facultyLogin.setOnClickListener {
-
+            val user = User()
+            user.no = binding.user.text.toString().toLong()
+            user.password = binding.password.text.toString()
+            viewModel.login(user,identity)
         }
+
+        viewModel.studentLoginResult.observe(this, Observer { result ->
+            when(result.code){
+                "200" -> {
+                    Log.d("LoginSuccess",result.data.toString())
+                }
+                "204" -> {
+                    Log.d("LoginFail","学号不存在")
+                }
+                "204" -> {
+                    Log.d("LoginFail","密码错误")
+                }
+            }
+        })
+
+        viewModel.facultyLoginResult.observe(this, Observer { result ->
+            when(result.code){
+                "200" -> {
+                    Log.d("LoginSuccess",result.data.toString())
+                    val intent = Intent(this,FacultyNotificationActivity::class.java)
+                    startActivity(intent)
+                }
+                "204" -> {
+                    Log.d("LoginFail","工号不存在")
+                }
+                "204" -> {
+                    Log.d("LoginFail","密码错误")
+                }
+            }
+        })
 
     }
 }

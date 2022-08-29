@@ -14,6 +14,6 @@ class FacultyNotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFacultyNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        FacultyNavigation.initialize(R.id.Tnotification,this,binding.facultyBottomNavigation)
+        FacultyNavigation.initialize(R.id.Tnotification,this,binding.facultyBottomNavigationFn)
     }
 }

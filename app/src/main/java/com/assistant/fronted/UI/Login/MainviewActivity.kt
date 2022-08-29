@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.assistant.fronted.R
 import com.assistant.fronted.UI.Faculty.FacultyNotificationActivity
+import com.assistant.fronted.UI.Faculty.FacultyUser
 import com.assistant.fronted.UI.Faculty.User
 import com.assistant.fronted.databinding.ActivityMainviewBinding
 import com.google.android.material.tabs.TabLayout
@@ -120,6 +121,7 @@ class MainviewActivity : AppCompatActivity() {
             when(result.code){
                 "200" -> {
                     Log.d("LoginSuccess",result.data.toString())
+                    FacultyUser.setUser(result.data)
                     val intent = Intent(this,FacultyNotificationActivity::class.java)
                     startActivity(intent)
                 }

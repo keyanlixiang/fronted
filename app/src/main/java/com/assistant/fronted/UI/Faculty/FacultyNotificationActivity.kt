@@ -2,8 +2,14 @@ package com.assistant.fronted.UI.Faculty
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.assistant.fronted.R
 import com.assistant.fronted.Tools.FacultyNavigation
+import com.assistant.fronted.UI.Faculty.Fragments.AffairFragment
+import com.assistant.fronted.UI.Faculty.Fragments.NotificationFragment
+import com.assistant.fronted.UI.Faculty.Fragments.SettingFragment
+import com.assistant.fronted.UI.FacultyFragmentAdapter
 import com.assistant.fronted.databinding.ActivityFacultyNotificationBinding
 
 class FacultyNotificationActivity : AppCompatActivity() {
@@ -14,6 +20,25 @@ class FacultyNotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFacultyNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        FacultyNavigation.initialize(R.id.Tnotification,this,binding.facultyBottomNavigationFn)
+
+        /**
+         * 底部导航栏与滑动切换页面
+         */
+        FacultyNavigation.initialize(R.id.Tnotification,binding.FacultyFragment,binding.facultyBottomNavigationFn)
+
+        val listOfFragment = listOf<Fragment>(NotificationFragment(),AffairFragment(),SettingFragment())
+        val viewpager2Adapter = FacultyFragmentAdapter(this,listOfFragment)
+        binding.FacultyFragment.adapter = viewpager2Adapter
+        binding.FacultyFragment.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                binding.facultyBottomNavigationFn.selectedItemId = when(position){
+                    0 -> R.id.Tnotification
+                    1 -> R.id.Taffair
+                    2 -> R.id.Tsetting
+                    else -> R.id.Tnotification
+                }
+                super.onPageSelected(position)
+            }
+        })
     }
 }

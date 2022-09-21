@@ -72,4 +72,7 @@ dependencies {
 
 //    gson依赖
     implementation 'com.google.code.gson:gson:2.8.5'
+
+//    viewpager2依赖
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }

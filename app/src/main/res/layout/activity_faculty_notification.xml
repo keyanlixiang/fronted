@@ -6,53 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".UI.Faculty.FacultyNotificationActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fnotification"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/FacultyFragment"
         android:layout_width="match_parent"
-        android:layout_height="618dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:layout_height="631dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/faculty_bottom_navigation_fn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/faculty_bottom_navigation_fn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="12"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/searchLocationBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:text="搜索"
-            android:textSize="20dp"
-            tools:ignore="TouchTargetSizeCheck" />
-
-    </LinearLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/faculty_bottom_navigation_fn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

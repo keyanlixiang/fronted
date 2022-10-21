@@ -1,10 +1,6 @@
 package com.assistant.fronted.network
 
-import com.assistant.fronted.model.Faculty
-import com.assistant.fronted.model.Result
-import com.assistant.fronted.model.Student
-import com.google.gson.Gson
-import okhttp3.ResponseBody
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,19 +41,6 @@ object LoginNetwork {
         }
     }
 
-//    将Result的data转换为对象
-    fun parseStudent(data:String?):Student?{
-        if (data.isNullOrEmpty()){
-            return null;
-        }
-        return Gson().fromJson(data,Student::class.java)
-    }
 
-    fun parseFaculty(data: String?): Faculty? {
-        if (data.isNullOrEmpty()){
-            return null;
-        }
-        return Gson().fromJson(data,Faculty::class.java)
-    }
 
 }

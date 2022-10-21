@@ -1,55 +1,50 @@
 package com.assistant.fronted.network
 
-import com.assistant.fronted.model.Faculty
-import com.assistant.fronted.model.Student
-import com.assistant.fronted.network.LoginNetwork.await
+import com.assistant.fronted.model.Message
 
 
 //此文件为测试端口传输数据
 
 suspend fun main(){
 
-////  测试学生登录
-//    val result=LoginNetwork.studentLogin(1002,"123456")
+//  测试学生登录
+//    val result=LoginNetwork.studentLogin(1001,"888888")
 //    print(result)
 //    println()
-//    val student: Student? =result.data
-//    student?.let {
-//        print(it.sno)
-//        print(" ")
-//        print(it.sname)
-//        println()
-//    }
-//
+
 ////  测试教职工登录
 //    val result1=LoginNetwork.facultyLogin(1001,"123456")
 //    print(result1)
-//    println()
-//    val faculty:Faculty?=result1.data
-//    faculty?.let {
-//        print(it.tno)
-//        print(" ")
-//        print(it.tname)
-//        println()
-//    }
 
 
-//  测试修改密码
-    val result=LoginNetwork.studentUpdatePassword(1001,"123456","888888")
-    print(result)
-    println()
 
-    val result1=LoginNetwork.studentUpdatePassword(1001,"123456","888888")
+//    消息测试
+//    val re=MessageNetwork.get(1001)
+//    print(re)
+
+    val result1=MessageNetwork.getMessageByPid(1011)
     print(result1)
     println()
 
-    val result2=LoginNetwork.facultyUpdatePassword(1001,"123456","888888")
-    print(result2)
+    val re=MessageNetwork.getMessageByTno(1001)
+    print(re)
     println()
 
-    val result3=LoginNetwork.facultyUpdatePassword(1001,"123456","888888")
-    print(result3)
+    val re1=MessageNetwork.delete(1005)
+    print(re1)
     println()
+
+    val re2=MessageNetwork.update(1011,"修改","修改")
+    print(re2)
+    println()
+
+    val re3=MessageNetwork.insert(1006,1002,"消息","1")
+    print(re3)
+    println()
+
+
+
+
 
 
 }

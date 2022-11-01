@@ -66,12 +66,18 @@ class AddNotification : AppCompatActivity() {
                 }
             }
             job.cancel()
+            clearSaved()
             this.finish()
         }
 
     }
 
 
+    private fun clearSaved(){
+        val editor = savedContent.edit()
+        editor.putString("Content","none")
+        editor.apply()
+    }
 
     private fun  fillIfSaved(){
         val content = savedContent.getString("Content","none")

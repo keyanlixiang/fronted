@@ -5,12 +5,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.assistant.fronted.R
 import com.assistant.fronted.UI.Faculty.FacultyNotificationActivity
 import com.assistant.fronted.UI.Faculty.FacultyUser
 import com.assistant.fronted.UI.Faculty.User
+import com.assistant.fronted.UI.Student.StudentNotificationActivity
+import com.assistant.fronted.UI.Student.StudentUser
 import com.assistant.fronted.databinding.ActivityMainviewBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -40,6 +44,13 @@ class MainviewActivity : AppCompatActivity() {
             binding.user.setText(usernameRemembered)
             binding.password.setText(passwordRemembered)
             binding.remember.isChecked = true
+        }
+
+        identity = userRemembered.getBoolean("identity",true)
+        if (identity){
+            binding.tabLayout.getTabAt(0)?.select()
+        }else{
+            binding.tabLayout.getTabAt(1)?.select()
         }
 
         /**
@@ -93,6 +104,10 @@ class MainviewActivity : AppCompatActivity() {
             }
         }
 
+        binding.password.addTextChangedListener {
+            binding.remember.isChecked = false
+        }
+
         /**
          * 登陆按钮
          */
@@ -106,13 +121,22 @@ class MainviewActivity : AppCompatActivity() {
         viewModel.studentLoginResult.observe(this, Observer { result ->
             when(result.code){
                 "200" -> {
+                    val userRemembered = getSharedPreferences("userRemember",Context.MODE_PRIVATE).edit()
+                    userRemembered.putBoolean("identity",identity)
+                    userRemembered.apply()
+
                     Log.d("LoginSuccess",result.data.toString())
+                    StudentUser.setUser(result.data)
+                    val intent = Intent(this,StudentNotificationActivity::class.java)
+                    startActivity(intent)
                 }
                 "204" -> {
                     Log.d("LoginFail","学号不存在")
+                    Toast.makeText(this,"学号不存在",Toast.LENGTH_LONG).show()
                 }
-                "204" -> {
+                "203" -> {
                     Log.d("LoginFail","密码错误")
+                    Toast.makeText(this,"密码错误",Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -120,6 +144,10 @@ class MainviewActivity : AppCompatActivity() {
         viewModel.facultyLoginResult.observe(this, Observer { result ->
             when(result.code){
                 "200" -> {
+                    val userRemembered = getSharedPreferences("userRemember",Context.MODE_PRIVATE).edit()
+                    userRemembered.putBoolean("identity",identity)
+                    userRemembered.apply()
+
                     Log.d("LoginSuccess",result.data.toString())
                     FacultyUser.setUser(result.data)
                     val intent = Intent(this,FacultyNotificationActivity::class.java)
@@ -127,9 +155,11 @@ class MainviewActivity : AppCompatActivity() {
                 }
                 "204" -> {
                     Log.d("LoginFail","工号不存在")
+                    Toast.makeText(this,"工号不存在",Toast.LENGTH_LONG).show()
                 }
-                "204" -> {
+                "203" -> {
                     Log.d("LoginFail","密码错误")
+                    Toast.makeText(this,"密码错误",Toast.LENGTH_LONG).show()
                 }
             }
         })

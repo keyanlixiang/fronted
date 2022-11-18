@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="通知"
+        android:id="@+id/Snotification"
+        android:icon="@drawable/ic_baseline_comment_24"
+        android:enabled="true"/>
+
+    <item
+        android:title="日程"
+        android:id="@+id/Sarrange"
+        android:icon="@drawable/ic_baseline_access_time_24"
+        android:enabled="true"/>
+
+    <item
+        android:title="事务"
+        android:id="@+id/Saffair"
+        android:icon="@drawable/ic_baseline_check_box_24"
+        android:enabled="true"/>
+
+    <item
+        android:title="成果"
+        android:id="@+id/Sachievement"
+        android:icon="@drawable/ic_baseline_emoji_events_24"
+        android:enabled="true"/>
+
+</menu>

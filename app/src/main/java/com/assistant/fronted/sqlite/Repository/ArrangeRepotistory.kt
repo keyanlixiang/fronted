@@ -60,4 +60,20 @@ object ArrangeRepotistory {
         initDao()
         return dao.getAll()
     }
+
+    /**
+     * 根据ID获取对应安排
+     */
+    fun getArrangeFromID(id: Int): Arrangment{
+        initDao()
+        return dao.getArrangeFromID(id)
+    }
+
+    /**
+     * 修改某个安排
+     */
+    fun updateArrange(content:String, id: Int){
+        initDao()
+        return dao.updateArrange(content, id)
+    }
 }

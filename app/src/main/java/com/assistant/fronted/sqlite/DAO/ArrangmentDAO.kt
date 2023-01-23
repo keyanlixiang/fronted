@@ -20,4 +20,10 @@ interface ArrangmentDAO {
 
     @Query("select * from arrangment")
     fun getAll(): List<Arrangment>
+
+    @Query("select * from arrangment where id= :id")
+    fun getArrangeFromID(id: Int): Arrangment
+
+    @Query("update arrangment set content = :content where id= :id")
+    fun updateArrange(content:String, id: Int)
 }

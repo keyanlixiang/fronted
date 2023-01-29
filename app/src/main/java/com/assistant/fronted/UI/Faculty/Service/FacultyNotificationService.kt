@@ -53,6 +53,7 @@ class FacultyNotificationService : Service() {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun sendMessage(messageData: MessageData?){
         if (messageData!=null && this::webSocketClient.isInitialized){
+            messageData.setMsgType(3)
             if (webSocketClient.readyState == ReadyState.OPEN){
                 webSocketClient.send(JSON.toJSONString(messageData))
                 Log.d("FacultyService","发送消息${JSON.toJSONString(messageData)}")

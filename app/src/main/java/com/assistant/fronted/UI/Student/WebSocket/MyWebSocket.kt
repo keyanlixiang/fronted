@@ -2,7 +2,9 @@ package com.assistant.fronted.UI.Student.WebSocket
 
 
 import android.util.Log
+import com.assistant.fronted.UI.Faculty.ViewModels.NotificationViewModel
 import com.google.gson.Gson
+import org.greenrobot.eventbus.EventBus
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
@@ -30,6 +32,7 @@ class MyWebSocket(url:String) : WebSocketClient(URI(url)) {
         val messageData: MessageData = gson.fromJson(s, MessageData::class.java)
         Log.i(TAG, "收到消息$s")
         Log.i("message", messageData.toString())
+        EventBus.getDefault().post(NotificationViewModel.NotificationViewModelEventBus(messageData,messageData.getMsgType()))
     }
 
     /*

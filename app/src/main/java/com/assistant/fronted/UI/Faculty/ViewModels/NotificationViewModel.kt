@@ -3,10 +3,14 @@ package com.assistant.fronted.UI.Faculty.ViewModels
 import android.util.Log
 import androidx.lifecycle.*
 import com.assistant.fronted.UI.Faculty.FacultyUser
+import com.assistant.fronted.UI.Student.WebSocket.MessageData
 import com.assistant.fronted.model.Message
 import com.assistant.fronted.network.MessageNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NotificationViewModel: ViewModel() {
     private val message_mutable = MutableLiveData<Long>()
@@ -34,7 +38,18 @@ class NotificationViewModel: ViewModel() {
         return result
     }
 
+    fun registerEventBus(){
+        EventBus.getDefault().register(this)
+    }
+
     fun getAllMessage_(){
         message_mutable.value = System.currentTimeMillis()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshAfterInsert(notificationViewModelEventBus: NotificationViewModelEventBus){
+        getAllMessage_()
+    }
+
+    class NotificationViewModelEventBus(val messageData: MessageData,val type: Int){}
 }

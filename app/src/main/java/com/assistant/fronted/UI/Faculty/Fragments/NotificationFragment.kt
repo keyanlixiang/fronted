@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.assistant.fronted.R
 import com.assistant.fronted.UI.Faculty.Activity.AddNotification
-import com.assistant.fronted.UI.Faculty.NotificationAdapter
+import com.assistant.fronted.UI.Faculty.Adapter.NotificationAdapter
 import com.assistant.fronted.UI.Faculty.ViewModels.NotificationViewModel
 import com.assistant.fronted.databinding.FragmentNotificationBinding
 import com.assistant.fronted.model.Message

@@ -1,4 +1,4 @@
-package com.assistant.fronted.UI.Faculty
+package com.assistant.fronted.UI.Faculty.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -20,13 +20,13 @@ class NotificationAdapter(val data: List<Message>): RecyclerView.Adapter<Notific
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotificationAdapter.ViewHolder {
+    ): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.notification_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NotificationAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val message = data[position]
         holder.time.text = SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(message.ptime)
         holder.content.text = message.pcontext

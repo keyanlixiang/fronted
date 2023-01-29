@@ -80,4 +80,7 @@ dependencies {
 //    Room
     implementation "androidx.room:room-runtime:2.1.0"
     kapt "androidx.room:room-compiler:2.1.0"
+
+//   websocket
+    implementation 'org.java-websocket:Java-WebSocket:1.5.1'
 }

@@ -52,6 +52,11 @@ class FacultyNotificationActivity : AppCompatActivity() {
         startService(serviceIntent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        startService(serviceIntent)
+    }
+
     override fun onDestroy() {
         stopService(serviceIntent)
         super.onDestroy()

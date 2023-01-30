@@ -39,6 +39,7 @@ class NotificationFragment : Fragment() {
         activity?.let { viewModel.messageLiveData.observe(it, Observer { data ->
             bindData_recyclerView(data.sortedByDescending { message -> message.ptime })
         }) }
+        viewModel.registerEventBus()
 
         return binding.root
     }

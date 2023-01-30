@@ -1,18 +1,17 @@
 package com.assistant.fronted.UI.Student.WebSocket
 
-
 import android.util.Log
 import com.assistant.fronted.UI.Faculty.ViewModels.NotificationViewModel
+import com.assistant.fronted.UI.Student.ViewModel.StudentNotificationViewModel
 import com.google.gson.Gson
 import org.greenrobot.eventbus.EventBus
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 
+class StudentWebSocket(url:String) : WebSocketClient(URI(url)) {
 
-class MyWebSocket(url:String) : WebSocketClient(URI(url)) {
-
-    private val TAG="MyWebSocket"
+    private val TAG="StudentWebSocket"
 
     /*
          *
@@ -30,9 +29,9 @@ class MyWebSocket(url:String) : WebSocketClient(URI(url)) {
     override fun onMessage(s: String) {
         val gson = Gson()
         val messageData: MessageData = gson.fromJson(s, MessageData::class.java)
-        Log.i(TAG, "辅导员收到消息$s")
+        Log.i(TAG, "学生收到消息$s")
         Log.i("message", messageData.toString())
-        EventBus.getDefault().post(NotificationViewModel.NotificationViewModelEventBus(messageData,messageData.getMsgType()))
+        EventBus.getDefault().post(StudentNotificationViewModel.NotificationViewModelEventBus(messageData,messageData.getMsgType()))
     }
 
     /*

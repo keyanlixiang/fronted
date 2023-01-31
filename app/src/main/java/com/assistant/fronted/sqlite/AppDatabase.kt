@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.assistant.fronted.model.Achievement
 import com.assistant.fronted.model.Arrangment
+import com.assistant.fronted.sqlite.DAO.AchievementDAO
 import com.assistant.fronted.sqlite.DAO.ArrangmentDAO
 
-@Database(version = 1, entities = [Arrangment::class])
+@Database(version = 1, entities = [Arrangment::class,Achievement::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ArrangmentDAO(): ArrangmentDAO
+    abstract fun AchievementDAO():AchievementDAO
     companion object {
         private var instance: AppDatabase? = null
         @Synchronized

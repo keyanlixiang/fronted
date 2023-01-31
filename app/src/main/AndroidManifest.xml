@@ -18,6 +18,9 @@
         android:theme="@style/NoActionbarMyTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UploadAchievement"
+            android:exported="false" />
+        <activity
             android:name=".UI.Student.Activity.AlterDeleteArrangeActivity"
             android:exported="false"
             android:theme="@style/MyDialog" />

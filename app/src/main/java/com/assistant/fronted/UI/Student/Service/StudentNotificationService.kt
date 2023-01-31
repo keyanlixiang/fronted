@@ -24,7 +24,7 @@ class StudentNotificationService : Service() {
         super.onCreate()
         try {
             if (!this::webSocketClient.isInitialized){
-                webSocketClient = StudentWebSocket("ws://10.0.2.2:8080/webSocket/${StudentUser.no}")
+                webSocketClient = StudentWebSocket("ws://1.116.250.147:8282/webSocket/${StudentUser.no}")
             }
             if (webSocketClient.connectBlocking()) {
                 Log.i("StudentService", "run: 连接服务器成功")

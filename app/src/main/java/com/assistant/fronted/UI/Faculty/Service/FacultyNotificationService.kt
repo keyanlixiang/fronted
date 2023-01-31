@@ -27,7 +27,7 @@ class FacultyNotificationService : Service() {
 
         try {
             if (!this::webSocketClient.isInitialized){
-                webSocketClient = MyWebSocket("ws://10.0.2.2:8080/webSocket/${FacultyUser.no}")
+                webSocketClient = MyWebSocket("ws://1.116.250.147:8282/webSocket/${FacultyUser.no}")
             }
             if (webSocketClient.connectBlocking()) {
                 Log.i("FacultyService", "run: 连接服务器成功")

@@ -26,7 +26,7 @@ class NotificationFragment : Fragment() {
 
         viewModel.getAllMessage_()
         viewModel.messageLiveData.observe(viewLifecycleOwner){
-            bindData_recyclerView(it)
+            bindData_recyclerView(it.sortedByDescending { message: Message -> message.ptime })
         }
         viewModel.registerEventBus()
 

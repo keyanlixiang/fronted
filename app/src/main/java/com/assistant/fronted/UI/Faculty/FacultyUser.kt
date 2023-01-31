@@ -1,6 +1,9 @@
 package com.assistant.fronted.UI.Faculty
 
+import com.assistant.fronted.UI.Student.WebSocket.MessageData
 import com.assistant.fronted.model.Faculty
+import org.greenrobot.eventbus.EventBus
+import java.text.SimpleDateFormat
 
 /**
  * @param no 工号
@@ -20,6 +23,8 @@ object FacultyUser {
     var password: String? = null
     var picture: String? = null
 
+    var messageData: MessageData? = null
+
     fun setUser(user: Faculty?){
         if (user != null){
             no = user.tno
@@ -30,5 +35,17 @@ object FacultyUser {
             password = user.tpassword
             picture = user.tpicture
         }
+    }
+
+    fun sendMessage(pid:Long,tno:Long,context:String){
+        val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis())
+        messageData = MessageData()
+        messageData?.apply {
+            setFromUserId(tno.toString())
+            setMsgData(context)
+            setTime(time)
+        }
+
+        EventBus.getDefault().post(messageData)
     }
 }

@@ -1,5 +1,9 @@
 package com.assistant.fronted.model
 
+/**
+ * 特别注明：
+ * @param sacademy 意义为该学生所属辅导员工号（此前为所属学院）
+ */
 class Student {
     var sno: Long = 0
     var sname: String? = null

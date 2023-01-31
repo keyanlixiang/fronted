@@ -1,27 +1,27 @@
-package com.assistant.fronted.UI.Faculty.ViewModels
+package com.assistant.fronted.UI.Student.ViewModel
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.assistant.fronted.UI.Faculty.FacultyUser
+import com.assistant.fronted.UI.Student.StudentUser
 import com.assistant.fronted.UI.Student.WebSocket.MessageData
 import com.assistant.fronted.model.Message
 import com.assistant.fronted.network.MessageNetwork
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NotificationViewModel: ViewModel() {
+class StudentNotificationViewModel:ViewModel() {
     private val message_mutable = MutableLiveData<Long>()
     val messageLiveData = Transformations.switchMap(message_mutable){
         getAllMessage()
     }
 
-    private fun getAllMessage(): LiveData<List<Message>>{
+    private fun getAllMessage(): LiveData<List<Message>> {
         val result = liveData<List<Message>>(Dispatchers.IO){
             val rs: List<Message> = try {
-                val answer =  MessageNetwork.getMessageByTno(FacultyUser.no!!)
+                val answer =  MessageNetwork.getMessageByTno(StudentUser.academy!!.toLong())
                 if (answer.isSuccess){
                     answer.data!!
                 }else{
@@ -51,5 +51,5 @@ class NotificationViewModel: ViewModel() {
         getAllMessage_()
     }
 
-    class NotificationViewModelEventBus(val messageData: MessageData,val type: Int){}
+    class NotificationViewModelEventBus(val messageData: MessageData, val type: Int){}
 }

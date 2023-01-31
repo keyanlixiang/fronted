@@ -115,7 +115,9 @@ class AddNotification : AppCompatActivity() {
         val pid = System.currentTimeMillis()
 
         if (tno != null){
-            val result = MessageNetwork.insert(pid,tno,context,"none")
+//            val result = MessageNetwork.insert(pid,tno,context,"none")
+
+            FacultyUser.sendMessage(pid, tno, context)
             return true
         }
 

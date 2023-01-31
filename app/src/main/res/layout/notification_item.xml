@@ -5,38 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="65dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_account_circle_34" />
-
     <TextView
         android:id="@+id/Title"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="1dp"
-        android:gravity="bottom"
+        android:gravity="bottom|center"
         android:text="Title"
         android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/picture"
+        android:textColor="#EA9452"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/content"
         android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:minHeight="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:text="content"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/picture"
+        app:layout_constraintStart_toEndOf="@+id/notificationItem_label"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
 
     <com.google.android.material.divider.MaterialDivider
@@ -53,10 +45,23 @@
         android:id="@+id/Time"
         android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="1dp"
+        android:gravity="bottom|right"
         android:text="Time"
-        android:gravity="bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Title"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/notificationItem_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="通知内容:"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textColor="#2F9CAE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

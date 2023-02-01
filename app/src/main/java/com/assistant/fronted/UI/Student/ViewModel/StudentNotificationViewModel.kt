@@ -48,6 +48,7 @@ class StudentNotificationViewModel:ViewModel() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshAfterInsert(notificationViewModelEventBus: NotificationViewModelEventBus){
+        Log.d("NotificationViewModel","EventBus Triggered")
         getAllMessage_()
     }
 

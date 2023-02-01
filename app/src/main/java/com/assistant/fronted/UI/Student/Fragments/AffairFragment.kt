@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.assistant.fronted.R
 import com.assistant.fronted.UI.Faculty.FacultyUser
 import com.assistant.fronted.UI.Login.MainviewActivity
+import com.assistant.fronted.UI.Student.Service.StudentNotificationService
 import com.assistant.fronted.UI.Student.StudentUser
 import com.assistant.fronted.databinding.FragmentAffair2Binding
 import com.assistant.fronted.model.Faculty
@@ -66,6 +67,7 @@ class AffairFragment : Fragment() {
          * 登出按钮
          */
         binding.logout.setOnClickListener {
+            StudentNotificationService.stopSelf_()
             val intent = Intent(activity,MainviewActivity::class.java)
             intent.putExtra("Logout",true)
             startActivity(intent)
@@ -92,6 +94,8 @@ class AffairFragment : Fragment() {
         if (result.isSuccess){
             Log.d("SettingFragment","修改密码成功")
             Toast.makeText(context,"修改成功", Toast.LENGTH_SHORT).show()
+
+            StudentNotificationService.stopSelf_()
 
             val intent = Intent(activity, MainviewActivity::class.java)
             intent.putExtra("EditPassword",result.data?.spassword)

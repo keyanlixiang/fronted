@@ -18,8 +18,6 @@ class FacultyNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFacultyNotificationBinding
 
-    private lateinit var serviceIntent: Intent
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFacultyNotificationBinding.inflate(layoutInflater)
@@ -50,20 +48,5 @@ class FacultyNotificationActivity : AppCompatActivity() {
                 super.onPageSelected(position)
             }
         })
-
-        /**
-         * 开启后台service
-         */
-        serviceIntent = Intent(this,FacultyNotificationService::class.java)
-        startService(serviceIntent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startService(serviceIntent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

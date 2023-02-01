@@ -28,8 +28,15 @@ import java.net.URISyntaxException
 class StudentNotificationService : Service() {
     private lateinit var webSocketClient: WebSocketClient
     private lateinit var manager: NotificationManager
-    private var notifyCount: Int = 0
-    private lateinit var netThread: Thread
+    private var notifyCount: Int = 1
+    private lateinit var netThread: NetWorkThread
+
+    companion object StopSelf{
+        var self: Service? = null
+        fun stopSelf_(){
+            self?.stopSelf()
+        }
+    }
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -37,6 +44,7 @@ class StudentNotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        StopSelf.self = this
         if (!this::webSocketClient.isInitialized){
             webSocketClient = StudentWebSocket("ws://1.116.250.147:8282/webSocket/${StudentUser.no}")
         }
@@ -61,6 +69,7 @@ class StudentNotificationService : Service() {
         if (this::webSocketClient.isInitialized){
             webSocketClient.closeBlocking()
         }
+        netThread.exit = false
         super.onDestroy()
     }
 
@@ -78,12 +87,12 @@ class StudentNotificationService : Service() {
             .setAutoCancel(true)
             .build()
         manager.notify(notifyCount,notification)
-        notifyCount++
     }
 
     class notifySignal(val messageData: MessageData){}
 
     class NetWorkThread(var SocketClient: WebSocketClient) : Thread(){
+        var exit: Boolean = true
         override fun run() {
             super.run()
             try {
@@ -91,6 +100,10 @@ class StudentNotificationService : Service() {
                     Log.i("FacultyService", "run: 连接服务器成功")
                 } else {
                     Log.i("FacultyService", "run: 连接服务器失败")
+                }
+                while(exit){
+                    Log.d("Student SERVICE NET",this.toString())
+                    sleep(2000)
                 }
             } catch (e: InterruptedException) {
                 e.printStackTrace()

@@ -17,13 +17,21 @@ import java.net.URISyntaxException
 
 class FacultyNotificationService : Service() {
     private lateinit var webSocketClient: WebSocketClient
-    private lateinit var netThread: Thread
+    private lateinit var netThread: NetWorkThread
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
     }
 
+    companion object StopSelf{
+        var self: Service? = null
+        fun stopSelf_(){
+            self?.stopSelf()
+        }
+    }
+
     override fun onCreate() {
+        self = this
         super.onCreate()
         if (!this::webSocketClient.isInitialized){
             webSocketClient = MyWebSocket("ws://1.116.250.147:8282/webSocket/${FacultyUser.no}")
@@ -42,6 +50,7 @@ class FacultyNotificationService : Service() {
         if (this::webSocketClient.isInitialized){
             webSocketClient.closeBlocking()
         }
+        netThread.exit = false
         super.onDestroy()
     }
 
@@ -61,6 +70,7 @@ class FacultyNotificationService : Service() {
     }
 
     class NetWorkThread(var SocketClient: WebSocketClient) : Thread(){
+        var exit: Boolean = true
         override fun run() {
             super.run()
             try {
@@ -68,6 +78,10 @@ class FacultyNotificationService : Service() {
                     Log.i("FacultyService", "run: 连接服务器成功")
                 } else {
                     Log.i("FacultyService", "run: 连接服务器失败")
+                }
+                while(exit){
+                    Log.d("Faculty SERVICE NET",this.toString())
+                    sleep(2000)
                 }
             } catch (e: InterruptedException) {
                 e.printStackTrace()

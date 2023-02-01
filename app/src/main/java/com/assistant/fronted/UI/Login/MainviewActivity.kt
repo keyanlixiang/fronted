@@ -2,17 +2,18 @@ package com.assistant.fronted.UI.Login
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.assistant.fronted.R
 import com.assistant.fronted.UI.Faculty.FacultyNotificationActivity
 import com.assistant.fronted.UI.Faculty.FacultyUser
+import com.assistant.fronted.UI.Faculty.Service.FacultyNotificationService
 import com.assistant.fronted.UI.Faculty.User
+import com.assistant.fronted.UI.Student.Service.StudentNotificationService
 import com.assistant.fronted.UI.Student.StudentNotificationActivity
 import com.assistant.fronted.UI.Student.StudentUser
 import com.assistant.fronted.databinding.ActivityMainviewBinding
@@ -21,6 +22,9 @@ import com.google.android.material.tabs.TabLayout
 class MainviewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainviewBinding
     val viewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+
+    private lateinit var studentServiceIntent: Intent
+    private lateinit var serviceIntent: Intent
 
     /**
      * 标识学生或职工
@@ -33,6 +37,22 @@ class MainviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 避免从桌面启动程序后，会重新实例化入口类的activity
+        if (!this.isTaskRoot) { // 当前类不是该Task的根部，那么启动之前的页面
+            val intent = intent
+            if (intent != null) {
+                val action = intent.action
+                if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == action) { // 当前类是从桌面启动的
+                    finish() // finish掉该类，直接打开该Task中现存的Activity
+                    return
+                }
+            }
+        }
+
+
+        studentServiceIntent = Intent(this, StudentNotificationService::class.java)
+        serviceIntent = Intent(this, FacultyNotificationService::class.java)
 
         /**
          * 读取保存的用户密码
@@ -138,6 +158,9 @@ class MainviewActivity : AppCompatActivity() {
 
                     Log.d("LoginSuccess",result.data.toString())
                     StudentUser.setUser(result.data)
+
+                    startService(studentServiceIntent)
+
                     val intent = Intent(this,StudentNotificationActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -162,6 +185,9 @@ class MainviewActivity : AppCompatActivity() {
 
                     Log.d("LoginSuccess",result.data.toString())
                     FacultyUser.setUser(result.data)
+
+                    startService(serviceIntent)
+
                     val intent = Intent(this,FacultyNotificationActivity::class.java)
                     startActivity(intent)
                     finish()

@@ -9,6 +9,7 @@ import org.greenrobot.eventbus.EventBus
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
+import kotlin.concurrent.thread
 
 class StudentWebSocket(url:String) : WebSocketClient(URI(url)) {
 
@@ -50,5 +51,6 @@ class StudentWebSocket(url:String) : WebSocketClient(URI(url)) {
          * */
     override fun onError(e: Exception?) {
         Log.i(TAG,"发送错误，连接断开")
+        thread{ reconnectBlocking() }.start()
     }
 }

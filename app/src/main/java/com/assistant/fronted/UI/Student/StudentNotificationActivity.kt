@@ -20,8 +20,6 @@ class StudentNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStudentNotificationBinding
 
-    private lateinit var studentServiceIntent: Intent
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudentNotificationBinding.inflate(layoutInflater)
@@ -57,17 +55,5 @@ class StudentNotificationActivity : AppCompatActivity() {
                 super.onPageSelected(position)
             }
         })
-
-        studentServiceIntent = Intent(this,StudentNotificationService::class.java)
-        startService(studentServiceIntent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startService(studentServiceIntent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

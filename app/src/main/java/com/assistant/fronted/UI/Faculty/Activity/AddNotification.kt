@@ -60,12 +60,10 @@ class AddNotification : AppCompatActivity() {
          * 完成编辑插入按钮
          */
         binding.addNotificationAdd.setOnClickListener {
-            scope.launch {
-                if(insert()){
-                    Log.d("NotificationInsert","Succeed")
-                }else{
-                    Log.d("NotificationInsert","Failure")
-                }
+            if(insert()){
+                Log.d("NotificationInsert","Succeed")
+            }else{
+                Log.d("NotificationInsert","Failure")
             }
             clearSaved()
             this.finish()
@@ -106,7 +104,7 @@ class AddNotification : AppCompatActivity() {
         return false
     }
 
-    private suspend fun insert(): Boolean{
+    private fun insert(): Boolean{
         val context = binding.contentInput.text.toString()
         if (context.isEmpty()){
             Toast.makeText(this,"不能为空哦",Toast.LENGTH_SHORT).show()

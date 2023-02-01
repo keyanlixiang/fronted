@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 class AddNotification : AppCompatActivity() {
 
     lateinit var binding: ActivityAddNotificationBinding
+    lateinit var job: Job
 
     /**
      * 本地暂存的在编辑的通知内容
@@ -28,6 +29,9 @@ class AddNotification : AppCompatActivity() {
         binding = ActivityAddNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         savedContent = getSharedPreferences("SavedNotification",Context.MODE_PRIVATE)
+
+        job = Job()
+        val scope = CoroutineScope(job)
 
         /**
          * 顶部栏
@@ -56,8 +60,6 @@ class AddNotification : AppCompatActivity() {
          * 完成编辑插入按钮
          */
         binding.addNotificationAdd.setOnClickListener {
-            val job = Job()
-            val scope = CoroutineScope(job)
             scope.launch {
                 if(insert()){
                     Log.d("NotificationInsert","Succeed")
@@ -65,13 +67,16 @@ class AddNotification : AppCompatActivity() {
                     Log.d("NotificationInsert","Failure")
                 }
             }
-            job.cancel()
             clearSaved()
             this.finish()
         }
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 
     private fun clearSaved(){
         val editor = savedContent.edit()

@@ -25,6 +25,8 @@ import java.net.URISyntaxException
 
 class StudentNotificationService : Service() {
     private lateinit var webSocketClient: WebSocketClient
+    private lateinit var manager: NotificationManager
+    private var notifyCount: Int = 0
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -32,7 +34,6 @@ class StudentNotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        EventBus.getDefault().register(this)
         try {
             if (!this::webSocketClient.isInitialized){
                 webSocketClient = StudentWebSocket("ws://1.116.250.147:8282/webSocket/${StudentUser.no}")
@@ -46,6 +47,12 @@ class StudentNotificationService : Service() {
             e.printStackTrace()
         } catch (e: URISyntaxException) {
             e.printStackTrace()
+        }
+        EventBus.getDefault().register(this)
+        manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel("UJSAS","UJS个人助手通知提醒",NotificationManager.IMPORTANCE_DEFAULT)
+            manager.createNotificationChannel(channel)
         }
     }
 
@@ -74,21 +81,17 @@ class StudentNotificationService : Service() {
         super.onDestroy()
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.POSTING)
     fun notifyMessage(messageData: notifySignal){
         Log.d("StudentService","EventBus Triggered")
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel("UJSAS","UJS个人助手通知提醒",NotificationManager.IMPORTANCE_DEFAULT)
-            manager.createNotificationChannel(channel)
-        }
         val notification = NotificationCompat.Builder(this,"UJSAS")
             .setContentTitle("新通知")
             .setContentText(messageData.messageData.getMsgData())
             .setSmallIcon(R.drawable.ic_baseline_message_24)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_baseline_message_24))
             .build()
-        manager.notify(System.currentTimeMillis().toInt(),notification)
+        manager.notify(notifyCount,notification)
+        notifyCount++
     }
 
     class notifySignal(val messageData: MessageData){}

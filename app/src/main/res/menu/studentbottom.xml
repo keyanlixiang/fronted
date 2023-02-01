@@ -14,9 +14,9 @@
         android:enabled="true"/>
 
     <item
-        android:title="事务"
+        android:title="设置"
         android:id="@+id/Saffair"
-        android:icon="@drawable/ic_baseline_check_box_24"
+        android:icon="@drawable/ic_baseline_settings_applications_24"
         android:enabled="true"/>
 
     <item

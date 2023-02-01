@@ -38,8 +38,17 @@ class NotificationFragment : Fragment() {
         viewModel.getAllMessage_()
         activity?.let { viewModel.messageLiveData.observe(it, Observer { data ->
             bindData_recyclerView(data.sortedByDescending { message -> message.ptime })
+            binding.refreshProgressbar.visibility = View.INVISIBLE
         }) }
         viewModel.registerEventBus()
+
+        /**
+         * 刷新按钮
+         */
+        binding.refreshFloatingActionButton.setOnClickListener {
+            viewModel.getAllMessage_()
+            binding.refreshProgressbar.visibility = View.VISIBLE
+        }
 
         return binding.root
     }

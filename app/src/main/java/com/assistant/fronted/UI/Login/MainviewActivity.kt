@@ -40,13 +40,24 @@ class MainviewActivity : AppCompatActivity() {
         val userRemembered = getSharedPreferences("userRemember",Context.MODE_PRIVATE)
         val usernameRemembered = userRemembered.getString("user","none")
         val passwordRemembered = userRemembered.getString("password","none")
+        identity = userRemembered.getBoolean("identity",true)
+
         if (!usernameRemembered.equals("none") && !passwordRemembered.equals("none")){
             binding.user.setText(usernameRemembered)
             binding.password.setText(passwordRemembered)
             binding.remember.isChecked = true
+
+            val newPassword = intent.getStringExtra("EditPassword")
+            if (newPassword != null){
+                if (newPassword.isNotEmpty()){
+                    val editor = userRemembered.edit()
+                    editor.putString("password",newPassword)
+                    editor.apply()
+                    binding.password.setText(newPassword)
+                }
+            }
         }
 
-        identity = userRemembered.getBoolean("identity",true)
         if (identity){
             binding.tabLayout.getTabAt(0)?.select()
         }else{
@@ -129,6 +140,7 @@ class MainviewActivity : AppCompatActivity() {
                     StudentUser.setUser(result.data)
                     val intent = Intent(this,StudentNotificationActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 "204" -> {
                     Log.d("LoginFail","学号不存在")
@@ -152,6 +164,7 @@ class MainviewActivity : AppCompatActivity() {
                     FacultyUser.setUser(result.data)
                     val intent = Intent(this,FacultyNotificationActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 "204" -> {
                     Log.d("LoginFail","工号不存在")
@@ -163,6 +176,19 @@ class MainviewActivity : AppCompatActivity() {
                 }
             }
         })
+
+        /**
+         * 自动登录
+         */
+        val isLogout = intent.getBooleanExtra("Logout",false)
+        if (!isLogout){
+            if (!usernameRemembered.equals("none") && !passwordRemembered.equals("none")){
+                val user = User()
+                user.no = binding.user.text.toString().toLong()
+                user.password = binding.password.text.toString()
+                viewModel.login(user,identity)
+            }
+        }
 
     }
 }

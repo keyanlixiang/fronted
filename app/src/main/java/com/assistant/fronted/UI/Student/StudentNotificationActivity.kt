@@ -48,6 +48,12 @@ class StudentNotificationActivity : AppCompatActivity() {
                     2 -> R.id.Saffair
                     else -> R.id.Sachievement
                 }
+                when(position){
+                    0 -> binding.topbar.title = "浏览通知"
+                    1 -> binding.topbar.title = "日程安排"
+                    2 -> binding.topbar.title = "账户信息"
+                    else -> binding.topbar.title = "成就管理"
+                }
                 super.onPageSelected(position)
             }
         })

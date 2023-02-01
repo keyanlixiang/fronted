@@ -37,12 +37,14 @@
             android:theme="@style/MyDialog" />
         <activity
             android:name=".UI.Student.StudentNotificationActivity"
+            android:launchMode="singleTask"
             android:exported="false" />
         <activity
             android:name=".UI.Faculty.Activity.AddNotification"
             android:exported="false" />
         <activity
             android:name=".UI.Faculty.FacultyNotificationActivity"
+            android:launchMode="singleTask"
             android:exported="false" />
         <activity
             android:name=".UI.Login.MainviewActivity"

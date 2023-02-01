@@ -55,7 +55,7 @@ class NotificationFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        viewModel.getAllMessage_()
+        viewModel.getAllMessage_()
     }
 
     private fun bindData_recyclerView(data: List<Message>){

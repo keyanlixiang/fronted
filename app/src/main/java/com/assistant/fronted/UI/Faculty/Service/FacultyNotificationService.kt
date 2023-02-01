@@ -17,6 +17,7 @@ import java.net.URISyntaxException
 
 class FacultyNotificationService : Service() {
     private lateinit var webSocketClient: WebSocketClient
+    private lateinit var netThread: Thread
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -24,41 +25,16 @@ class FacultyNotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
-        try {
-            if (!this::webSocketClient.isInitialized){
-                webSocketClient = MyWebSocket("ws://1.116.250.147:8282/webSocket/${FacultyUser.no}")
-            }
-            if (webSocketClient.connectBlocking()) {
-                Log.i("FacultyService", "run: 连接服务器成功")
-            } else {
-                Log.i("FacultyService", "run: 连接服务器失败")
-            }
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        } catch (e: URISyntaxException) {
-            e.printStackTrace()
+        if (!this::webSocketClient.isInitialized){
+            webSocketClient = MyWebSocket("ws://1.116.250.147:8282/webSocket/${FacultyUser.no}")
         }
-
         EventBus.getDefault().register(this)
+        netThread = NetWorkThread(webSocketClient)
+        netThread.start()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        if (webSocketClient.readyState != ReadyState.OPEN){
-            try {
-                if (webSocketClient.connectBlocking()) {
-                    Log.i("FacultyService", "reconnect: 连接服务器成功")
-                } else {
-                    Log.i("FacultyService", "reconnect: 连接服务器失败")
-                }
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            } catch (e: URISyntaxException) {
-                e.printStackTrace()
-            }
-        }
-
+        Log.d("FacultyServiceNet",webSocketClient.readyState.toString())
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -80,6 +56,23 @@ class FacultyNotificationService : Service() {
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    class NetWorkThread(var SocketClient: WebSocketClient) : Thread(){
+        override fun run() {
+            super.run()
+            try {
+                if (SocketClient.connectBlocking()) {
+                    Log.i("FacultyService", "run: 连接服务器成功")
+                } else {
+                    Log.i("FacultyService", "run: 连接服务器失败")
+                }
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            } catch (e: URISyntaxException) {
+                e.printStackTrace()
             }
         }
     }

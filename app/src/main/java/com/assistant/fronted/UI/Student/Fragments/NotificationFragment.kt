@@ -42,6 +42,11 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllMessage_()
+    }
+
     private fun bindData_recyclerView(data: List<Message>){
         val layoutManager = LinearLayoutManager(this.context)
         val adapter = NotificationAdapter(data)

@@ -64,7 +64,6 @@ class FacultyNotificationActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        stopService(serviceIntent)
         super.onDestroy()
     }
 }

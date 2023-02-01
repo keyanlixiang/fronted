@@ -68,7 +68,6 @@ class StudentNotificationActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        stopService(studentServiceIntent)
         super.onDestroy()
     }
 }

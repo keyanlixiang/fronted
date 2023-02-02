@@ -13,12 +13,15 @@ import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
 import com.assistant.fronted.R
 import com.assistant.fronted.databinding.ActivityUploadAchievementBinding
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.util.ArrayList
 
 class UploadAchievement : AppCompatActivity(), BGASortableNinePhotoLayout.Delegate {
 
     lateinit var binding:ActivityUploadAchievementBinding
+    private val PRC_PHOTO_PICKER = 1
     private val RC_CHOOSE_PHOTO = 1
     private val RC_PHOTO_PREVIEW = 2
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,23 +41,46 @@ class UploadAchievement : AppCompatActivity(), BGASortableNinePhotoLayout.Delega
 
     }
 
+    @AfterPermissionGranted(1)
+    private fun choicePhotoWrapper() {
+        val perms =
+            arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
+            val takePhotoDir =
+                File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto")
+            val photoPickerIntent = BGAPhotoPickerActivity.IntentBuilder(this)
+                .cameraFileDir(takePhotoDir ) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
+                .maxChooseCount(binding.mPhotosSnpl!!.maxItemCount - binding.mPhotosSnpl!!.itemCount) // 图片选择张数的最大值
+                .selectedPhotos(null) // 当前已选中的图片路径集合
+                .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
+                .build()
+            startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照",
+                PRC_PHOTO_PICKER,
+                *perms
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
     override fun onClickAddNinePhotoItem(
         sortableNinePhotoLayout: BGASortableNinePhotoLayout?,
         view: View?,
         position: Int,
         models: ArrayList<String>?
     ) {
-        // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-        val takePhotoDir =
-            File(Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath()+"/test")
-        Log.d("takePhotoDir",takePhotoDir.toString())
-        val photoPickerIntent = BGAPhotoPickerActivity.IntentBuilder(this)
-            .cameraFileDir(File("/storage/emulated/0/Pictures")) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
-            .maxChooseCount(binding.mPhotosSnpl!!.maxItemCount - binding.mPhotosSnpl!!.itemCount) // 图片选择张数的最大值
-            .selectedPhotos(models) // 当前已选中的图片路径集合
-            .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
-            .build()
-        startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
+       choicePhotoWrapper()
     }
 
     override fun onClickDeleteNinePhotoItem(
